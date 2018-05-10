@@ -209,7 +209,7 @@ class Persistence():
         on the college referenced in the list self.college_semester. All
         three lists should be referenced by sem:
             self.grad_rate_semester
-            self.ret_rate_semester 
+            self.ret_rate_semester
             self.col_nces_semester
             self.col_name_semester
             self.col_type_semester
@@ -241,7 +241,10 @@ class Persistence():
                 self.grad_rate_semester[sem] = col_data[3]
                 self.ret_rate_semester[sem] = col_data[7]
                 if col_data[1] == '2 yr' and col_data[5]:
-                    self.grad_rate_semester[sem] += col_data[5]/2.0
+                    if self.grad_rate_semester[sem]:
+                        self.grad_rate_semester[sem] += col_data[5]/2.0
+                    else:
+                        self.grad_rate_semester[sem] = col_data[5]/2.0
             else:
                 self.grad_rate_semester[sem] = col_data[4]
 
@@ -254,10 +257,10 @@ class Persistence():
 
                 else: # one of the two grad rates is not defined
                     self.ret_rate_semester[sem] = col_data[7]
-                
+
                 if col_data[1] == '2 yr' and col_data[6]:
                     self.grad_rate_semester[sem] += col_data[6]/2.0
-                
+
         else:
             self.grad_rate_semester[sem] = 0.0
             self.ret_rate_semester[sem] = 0.0
